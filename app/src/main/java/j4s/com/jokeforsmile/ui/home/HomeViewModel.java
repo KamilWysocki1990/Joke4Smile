@@ -14,7 +14,7 @@ import timber.log.Timber;
 public class HomeViewModel extends ViewModel {
 
     JokeFragmentModel jokeFragmentModel = new JokeFragmentModel();
-    float x1, x2;
+    private float x1, x2;
 
     private MutableLiveData<String> jokeAsk;
     private MutableLiveData<String> jokeAnswer;
@@ -42,6 +42,7 @@ public class HomeViewModel extends ViewModel {
                             jokeAsk.setValue(randomJokes.getSetup());
                             jokeAnswer.setValue(randomJokes.getPunchline());
 
+
                         }, Throwable::printStackTrace);
 
     }
@@ -50,6 +51,7 @@ public class HomeViewModel extends ViewModel {
             //coordinates from  1st touch
             case MotionEvent.ACTION_DOWN: {
                 x1 = event.getX();
+                jokeFragmentModel.saveJokeToDatabase();
                 break;
             }
             case MotionEvent.ACTION_UP: {

@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import androidx.annotation.Nullable;
+import androidx.room.Room;
 import j4s.com.jokeforsmile.repository.room.JokesDatabase;
 import timber.log.Timber;
 
@@ -28,7 +29,10 @@ public class JokeForSmileApplication extends Application {
         Timber.plant(new MyDebugTree());
         Timber.e("onCreate from Application");
 
-
+        database = Room.databaseBuilder(this, JokesDatabase.class,JokesDatabase.NAME)
+                .allowMainThreadQueries()
+                .fallbackToDestructiveMigration()
+                .build();
 //// Dagger 2
 //        appComponent = DaggerAppComponent
 //                .builder()
