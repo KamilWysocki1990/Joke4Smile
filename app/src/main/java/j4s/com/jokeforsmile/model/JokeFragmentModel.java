@@ -2,11 +2,16 @@ package j4s.com.jokeforsmile.model;
 
 import com.google.gson.Gson;
 
+import java.util.List;
+
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+import j4s.com.jokeforsmile.JokeForSmileApplication;
 import j4s.com.jokeforsmile.repository.RandomJokes;
+import j4s.com.jokeforsmile.repository.dao.JokesDao;
+import j4s.com.jokeforsmile.repository.dao.JokesDaoInterface;
 import j4s.com.jokeforsmile.repository.network.Api;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -16,6 +21,8 @@ import timber.log.Timber;
 public class JokeFragmentModel {
 
 
+    JokesDao jokesDao = JokeForSmileApplication.getRoom().jokesDao();
+    RandomJokes randomJokes;
     Retrofit retrofit = new Retrofit.Builder()
             // set base url for every request method defined in Api.class
             .baseUrl(Api.BASE_URL)
@@ -27,9 +34,8 @@ public class JokeFragmentModel {
             .build();
 
 
-    CompositeDisposable compositeDisposable = new CompositeDisposable();
-    Api api = retrofit.create(Api.class);
-    RandomJokes randomJokes;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private Api api = retrofit.create(Api.class);
 
     public Single<RandomJokes> getDataFromApi() {
         return Single.create(emitter -> {
@@ -57,5 +63,10 @@ public class JokeFragmentModel {
         });
     }
 
+
+    public void saveJokeToDatabase(){
+        jokesDao.insert(randomJokes);
+        Timber.e("Jokes Id" +jokesDao.getJokeById(randomJokes.getId()));
+    }
 
 }

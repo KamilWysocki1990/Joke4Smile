@@ -1,6 +1,8 @@
 package j4s.com.jokeforsmile.repository.dao;
 
 
+import android.util.Log;
+
 import java.util.List;
 
 import androidx.room.Dao;
