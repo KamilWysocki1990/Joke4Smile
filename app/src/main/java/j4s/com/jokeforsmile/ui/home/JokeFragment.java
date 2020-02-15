@@ -23,13 +23,13 @@ public class JokeFragment extends Fragment {
     private String TAG = "JokeFragment";
     private LottieAnimationView lottieAnimationView;
     private LottieAnimationView animationForLoading;
-    private HomeViewModel homeViewModel;
+    private JokeViewModel jokeViewModel;
     private TextView askText;
     private TextView answerText;
 
     @OnTouch
     public boolean swapTouch(MotionEvent event) {
-        switch (homeViewModel.checkMotionEvenSwap(event)) {
+        switch (jokeViewModel.checkMotionEvenSwap(event)) {
             case 1: {
                 Timber.v("Right to left swap");
                 lottieAnimationView.playAnimation();
@@ -62,18 +62,17 @@ public class JokeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_joke, container, false);
         ButterKnife.bind(this, root);
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
-        // final Button button = root.findViewById(R.id.buttonChange);
+        jokeViewModel =
+                ViewModelProviders.of(this).get(JokeViewModel.class);
          askText = root.findViewById(R.id.askJokes);
          answerText = root.findViewById(R.id.answerJokes);
         lottieAnimationView = root.findViewById(R.id.imageViewForAnimation);
         animationForLoading = root.findViewById(R.id.animationForLoading);
-        homeViewModel.getJokeAsk().observe(this, s -> {askText.setText(s);
+        jokeViewModel.getJokeAsk().observe(this, s -> {askText.setText(s);
             setVisibilityAfterJokeUpdate();
             animationForLoading.pauseAnimation();
         });
-        homeViewModel.getJokeAnswer().observe(this, s -> answerText.setText(s));
+        jokeViewModel.getJokeAnswer().observe(this, s -> answerText.setText(s));
 
 
         return root;

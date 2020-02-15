@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
-        android:text="Notification"
+        android:text="@string/joke_notification"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="25sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,15 +58,16 @@
 
         />
 
-    <ToggleButton
+    <Switch
         android:id="@+id/switchButtonNotificationOn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textOff="Off"
-        android:textOn="On"
+        android:textOff="@string/off"
+        android:textOn="@string/on"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/textViewNotification"
+        app:layout_constraintBottom_toBottomOf="@id/textViewNotification"
 
         />
      <com.airbnb.lottie.LottieAnimationView

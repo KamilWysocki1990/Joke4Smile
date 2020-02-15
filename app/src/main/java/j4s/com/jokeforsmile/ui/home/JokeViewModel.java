@@ -1,52 +1,51 @@
 package j4s.com.jokeforsmile.ui.home;
 
-import android.util.Log;
 import android.view.MotionEvent;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import j4s.com.jokeforsmile.model.JokeFragmentModel;
 import timber.log.Timber;
 
-public class HomeViewModel extends ViewModel {
+public class JokeViewModel extends ViewModel {
 
-    JokeFragmentModel jokeFragmentModel = new JokeFragmentModel();
+    private JokeFragmentModel jokeFragmentModel = new JokeFragmentModel();
     private float x1, x2;
 
     private MutableLiveData<String> jokeAsk;
     private MutableLiveData<String> jokeAnswer;
 
-    public HomeViewModel() {
+    public JokeViewModel() {
         jokeAsk = new MutableLiveData<>();
         jokeAnswer = new MutableLiveData<>();
         //  mText.setValue("This is home fragment");
         observeDataFromModel();
     }
 
-    public LiveData<String> getJokeAsk() {
+     LiveData<String> getJokeAsk() {
         return jokeAsk;
     }
 
-    public LiveData<String> getJokeAnswer() {
+     LiveData<String> getJokeAnswer() {
         return jokeAnswer;
     }
 
     private void observeDataFromModel() {
         Disposable d = jokeFragmentModel.getDataFromApi()
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         randomJokes -> {
                             jokeAsk.setValue(randomJokes.getSetup());
                             jokeAnswer.setValue(randomJokes.getPunchline());
-
-
                         }, Throwable::printStackTrace);
 
     }
-    public int checkMotionEvenSwap(MotionEvent event) {
+     int checkMotionEvenSwap(MotionEvent event) {
         switch (event.getAction()) {
             //coordinates from  1st touch
             case MotionEvent.ACTION_DOWN: {
@@ -75,5 +74,11 @@ public class HomeViewModel extends ViewModel {
 
         }
         return 0;
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+
     }
 }
