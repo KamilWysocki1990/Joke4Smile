@@ -13,25 +13,18 @@ import androidx.room.Query;
 import j4s.com.jokeforsmile.repository.RandomJokes;
 
 @Dao
-public interface JokesDao extends JokesDaoInterface {
+public interface JokesDao   {
 
     @Query("SELECT * FROM RandomJokes")
     List<RandomJokes> getAll();
 
-    @Override
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(RandomJokes randomJokes);
 
-  @Override
     @Delete
     void delete(RandomJokes randomJokes);
 
     @Query("SELECT * FROM RandomJokes WHERE id LIKE :jokeId LIMIT 1")
-    @Override
     RandomJokes getJokeById(int jokeId);
 
-
-   @Query("SELECT *FROM RandomJokes WHERE accountName LIKE:account LIMIT 1000")
-   @Override
-   List<RandomJokes> getJokeByAccount(String account);
 }

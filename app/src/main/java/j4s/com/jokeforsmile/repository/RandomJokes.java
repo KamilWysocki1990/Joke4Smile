@@ -38,8 +38,6 @@ public class RandomJokes {
         return accountName;
     }
 
-
-
     public int getId() {
         return id;
     }

@@ -8,14 +8,14 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="j4s.com.jokeforsmile.ui.home.JokeFragment"
-        android:label="@string/menu_home"
+        android:label="@string/menu_jokes"
         tools:layout="@layout/fragment_joke" />
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="j4s.com.jokeforsmile.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:name="j4s.com.jokeforsmile.ui.gallery.SavedJokeFragment"
+        android:label="@string/menu_saved_joke"
+        tools:layout="@layout/fragment_saved_jokes" />
 
     <fragment
         android:id="@+id/nav_slideshow"
